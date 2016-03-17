@@ -45,7 +45,9 @@ namespace PixelEater
         {
             // TODO: Add your initialization logic here
 
-            
+            playerposition = new Vector2(graphics.GraphicsDevice.Viewport.Width/2,graphics.GraphicsDevice.Viewport.Height/2);
+            pixelposition = new Vector2(rng.Next(0,graphics.GraphicsDevice.Viewport.Width), rng.Next(0, graphics.GraphicsDevice.Viewport.Height));
+
 
             base.Initialize();
         }
@@ -63,10 +65,13 @@ namespace PixelEater
             player = new Texture2D(graphics.GraphicsDevice, (int)playersize.X, (int)playersize.Y);
             Color[] playerdata = new Color[(int)playersize.X * (int)playersize.Y];
             for (int i = 0; i < playerdata.Length; i++) playerdata[i] = playercolor;
+            player.SetData(playerdata);
 
             pixel = new Texture2D(graphics.GraphicsDevice, (int)pixelsize.X, (int)pixelsize.Y);
             Color[] pixeldata = new Color[(int)pixelsize.X * (int)pixelsize.Y];
             for (int i = 0; i < pixeldata.Length; i++) pixeldata[i] = pixelcolor;
+            pixel.SetData(pixeldata);
+
 
             // TODO: use this.Content to load your game content here
         }
@@ -103,7 +108,10 @@ namespace PixelEater
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            spriteBatch.Draw(player, playerposition);
+            spriteBatch.Draw(pixel, pixelposition);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }

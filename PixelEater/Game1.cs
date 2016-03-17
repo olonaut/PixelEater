@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace PixelEater
 {
@@ -12,6 +13,7 @@ namespace PixelEater
         //Basic Stuff
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Random rng = new Random();
 
         //Values
         private Vector2 playersize = new Vector2(40, 40);
@@ -23,7 +25,9 @@ namespace PixelEater
         Texture2D player;
         Texture2D pixel;
 
-
+        //Positions
+        Vector2 playerposition;
+        Vector2 pixelposition;
 
         public Game1()
         {
@@ -41,6 +45,8 @@ namespace PixelEater
         {
             // TODO: Add your initialization logic here
 
+            
+
             base.Initialize();
         }
 
@@ -55,7 +61,12 @@ namespace PixelEater
 
             //Textures
             player = new Texture2D(graphics.GraphicsDevice, (int)playersize.X, (int)playersize.Y);
+            Color[] playerdata = new Color[(int)playersize.X * (int)playersize.Y];
+            for (int i = 0; i < playerdata.Length; i++) playerdata[i] = playercolor;
+
             pixel = new Texture2D(graphics.GraphicsDevice, (int)pixelsize.X, (int)pixelsize.Y);
+            Color[] pixeldata = new Color[(int)pixelsize.X * (int)pixelsize.Y];
+            for (int i = 0; i < pixeldata.Length; i++) pixeldata[i] = pixelcolor;
 
             // TODO: use this.Content to load your game content here
         }

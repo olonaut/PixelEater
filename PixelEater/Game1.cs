@@ -107,6 +107,8 @@ namespace PixelEater
             keystate = Keyboard.GetState();
             padstate = GamePad.GetState(PlayerIndex.One);
 
+
+            //TODO block Controlls of all other devices when one device is pressed.
             //Controlls (Keyboard)
             if (keystate.IsKeyDown(Keys.W) || keystate.IsKeyDown(Keys.Up)) playerposition.Y -= 10;
             if (keystate.IsKeyDown(Keys.S) || keystate.IsKeyDown(Keys.Down)) playerposition.Y += 10;
@@ -119,6 +121,9 @@ namespace PixelEater
             if (padstate.DPad.Down == ButtonState.Pressed) playerposition.Y += 10;
             if (padstate.DPad.Left == ButtonState.Pressed) playerposition.X -= 10;
             if (padstate.DPad.Right == ButtonState.Pressed) playerposition.X += 10;
+            //Right Thumb-Stick
+            playerposition.X += (int)(padstate.ThumbSticks.Right.X * 10);
+            playerposition.Y -= (int)(padstate.ThumbSticks.Right.Y * 10);
 
             //Collisions (Walls)
             if (playerposition.X < 0) playerposition.X = 0;

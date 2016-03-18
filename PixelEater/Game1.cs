@@ -51,7 +51,6 @@ namespace PixelEater
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             rng = new Random();
 
             playerposition = new Vector2(graphics.GraphicsDevice.Viewport.Width/2,graphics.GraphicsDevice.Viewport.Height/2);
@@ -82,8 +81,6 @@ namespace PixelEater
             pixel.SetData(pixeldata);
 
             font = Content.Load<SpriteFont>("score");
-
-            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
@@ -92,7 +89,8 @@ namespace PixelEater
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+            pixel.Dispose();
+            player.Dispose();
         }
 
         /// <summary>

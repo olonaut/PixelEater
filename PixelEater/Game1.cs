@@ -34,6 +34,8 @@ namespace PixelEater
         //"Featues"
         int score;
 
+        //Fonts
+        SpriteFont font;
 
         public Game1()
         {
@@ -53,7 +55,7 @@ namespace PixelEater
             rng = new Random();
 
             playerposition = new Vector2(graphics.GraphicsDevice.Viewport.Width/2,graphics.GraphicsDevice.Viewport.Height/2);
-            pixelposition = new Vector2(rng.Next(0,graphics.GraphicsDevice.Viewport.Width), rng.Next(0, graphics.GraphicsDevice.Viewport.Height));
+            pixelposition = new Vector2(rng.Next(0,graphics.GraphicsDevice.Viewport.Width - (int)pixelsize.X), rng.Next(0, graphics.GraphicsDevice.Viewport.Height - (int)pixelsize.Y));
             score = 0;
 
             base.Initialize();
@@ -79,6 +81,7 @@ namespace PixelEater
             for (int i = 0; i < pixeldata.Length; i++) pixeldata[i] = pixelcolor;
             pixel.SetData(pixeldata);
 
+            font = Content.Load<SpriteFont>("score");
 
             // TODO: use this.Content to load your game content here
         }
@@ -138,6 +141,7 @@ namespace PixelEater
             spriteBatch.Begin(SpriteSortMode.Deferred);
             spriteBatch.Draw(player, playerposition);
             spriteBatch.Draw(pixel, pixelposition);
+            spriteBatch.DrawString(font, "score: " + score, new Vector2(0, graphics.GraphicsDevice.Viewport.Height - font.MeasureString("score: " + score).Y), Color.Black);
             spriteBatch.End();
 
             base.Draw(gameTime);
@@ -146,7 +150,7 @@ namespace PixelEater
         public void pixelreset()
         {
             score += 1;
-            pixelposition = new Vector2(rng.Next(0, graphics.GraphicsDevice.Viewport.Width), rng.Next(0, graphics.GraphicsDevice.Viewport.Height));
+            pixelposition = new Vector2(rng.Next(0, graphics.GraphicsDevice.Viewport.Width-(int)pixelsize.X), rng.Next(0, graphics.GraphicsDevice.Viewport.Height-(int)pixelsize.Y));
         }
 
     }

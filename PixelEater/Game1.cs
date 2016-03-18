@@ -134,14 +134,17 @@ namespace PixelEater
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            //Draw blue Screen
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            //Draw stuff on screen ontop of blue screen.
             spriteBatch.Begin(SpriteSortMode.Deferred);
             spriteBatch.Draw(player, playerposition);
             spriteBatch.Draw(pixel, pixelposition);
             spriteBatch.DrawString(font, "score: " + score, new Vector2(0, graphics.GraphicsDevice.Viewport.Height - font.MeasureString("score: " + score).Y), Color.Black);
             spriteBatch.End();
-
+            
+            //Draw. Just Draw.
             base.Draw(gameTime);
         }
 

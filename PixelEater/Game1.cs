@@ -13,7 +13,8 @@ namespace PixelEater
         //Basic Stuff
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Random rng = new Random();
+        Random rng;
+
 
         //Values
         private Vector2 playersize = new Vector2(40, 40);
@@ -44,6 +45,7 @@ namespace PixelEater
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            rng = new Random();
 
             playerposition = new Vector2(graphics.GraphicsDevice.Viewport.Width/2,graphics.GraphicsDevice.Viewport.Height/2);
             pixelposition = new Vector2(rng.Next(0,graphics.GraphicsDevice.Viewport.Width), rng.Next(0, graphics.GraphicsDevice.Viewport.Height));

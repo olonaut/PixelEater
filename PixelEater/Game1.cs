@@ -114,7 +114,7 @@ namespace PixelEater
 
             //TODO block Controlls of all other devices when one device is pressed.
             //Controlls (Keyboard)
-            if(dpadlock == false | rtsticklock == false) { 
+            if(dpadlock == false && rtsticklock == false) { 
                 if (keystate.IsKeyDown(Keys.W) || keystate.IsKeyDown(Keys.Up)) playerposition.Y -= 10;
                 if (keystate.IsKeyDown(Keys.S) || keystate.IsKeyDown(Keys.Down)) playerposition.Y += 10;
                 if (keystate.IsKeyDown(Keys.A) || keystate.IsKeyDown(Keys.Left)) playerposition.X -= 10;
@@ -126,7 +126,7 @@ namespace PixelEater
 
             //Controlls (Gamepad)
             //DPAD
-            if(wasd_keylock == false | rtsticklock == false) { 
+            if(wasd_keylock == false && rtsticklock == false) { 
                 if (padstate.DPad.Up == ButtonState.Pressed) playerposition.Y -= 10;
                 if (padstate.DPad.Down == ButtonState.Pressed) playerposition.Y += 10;
                 if (padstate.DPad.Left == ButtonState.Pressed) playerposition.X -= 10;
@@ -136,7 +136,7 @@ namespace PixelEater
                 else dpadlock = false;
             }
             //Right Thumb-Stick
-            if(wasd_keylock == false | dpadlock == false) { 
+            if(wasd_keylock == false && dpadlock == false) { 
                 playerposition.X += (int)(padstate.ThumbSticks.Right.X * 10);
                 playerposition.Y -= (int)(padstate.ThumbSticks.Right.Y * 10);
                 //lock

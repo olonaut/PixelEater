@@ -98,8 +98,23 @@ namespace PixelEater
                 Exit();
 
             //Getting keystate & padstate
-            padstate = GamePad.GetState(PlayerIndex.One);
             keystate = Keyboard.GetState();
+            padstate = GamePad.GetState(PlayerIndex.One);
+
+            //Controlls (Keyboard)
+            if (keystate.IsKeyDown(Keys.W) || keystate.IsKeyDown(Keys.Up)) playerposition.Y -= 10;
+            if (keystate.IsKeyDown(Keys.S) || keystate.IsKeyDown(Keys.Down)) playerposition.Y += 10;
+            if (keystate.IsKeyDown(Keys.A) || keystate.IsKeyDown(Keys.Left)) playerposition.X -= 10;
+            if (keystate.IsKeyDown(Keys.D) || keystate.IsKeyDown(Keys.Right)) playerposition.X += 10;
+
+            //Controlls (Gamepad)
+            //TODO
+
+            //Collisions (Walls)
+            if (playerposition.X < 0) playerposition.X = 0;
+            if (playerposition.X + playersize.X > graphics.GraphicsDevice.Viewport.Width) playerposition.X = graphics.GraphicsDevice.Viewport.Width - playersize.X;
+            if (playerposition.Y < 0) playerposition.Y = 0;
+            if (playerposition.Y + playersize.Y > graphics.GraphicsDevice.Viewport.Height) playerposition.Y = graphics.GraphicsDevice.Viewport.Height - playersize.Y;
 
             base.Update(gameTime);
         }
@@ -112,7 +127,7 @@ namespace PixelEater
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Deferred);
             spriteBatch.Draw(player, playerposition);
             spriteBatch.Draw(pixel, pixelposition);
             spriteBatch.End();

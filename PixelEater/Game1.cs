@@ -31,6 +31,10 @@ namespace PixelEater
         Vector2 playerposition;
         Vector2 pixelposition;
 
+        //"Featues"
+        int score;
+
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -50,6 +54,7 @@ namespace PixelEater
 
             playerposition = new Vector2(graphics.GraphicsDevice.Viewport.Width/2,graphics.GraphicsDevice.Viewport.Height/2);
             pixelposition = new Vector2(rng.Next(0,graphics.GraphicsDevice.Viewport.Width), rng.Next(0, graphics.GraphicsDevice.Viewport.Height));
+            score = 0;
 
             base.Initialize();
         }
@@ -116,6 +121,9 @@ namespace PixelEater
             if (playerposition.Y < 0) playerposition.Y = 0;
             if (playerposition.Y + playersize.Y > graphics.GraphicsDevice.Viewport.Height) playerposition.Y = graphics.GraphicsDevice.Viewport.Height - playersize.Y;
 
+            //If player Touches Pixel
+            if (playerposition.X + playersize.X >= pixelposition.X && playerposition.X <= pixelposition.X + pixelsize.X && playerposition.Y + playersize.Y >= pixelposition.Y && playerposition.Y <= pixelposition.Y + pixelsize.Y) pixelreset();
+
             base.Update(gameTime);
         }
 
@@ -134,5 +142,12 @@ namespace PixelEater
 
             base.Draw(gameTime);
         }
+
+        public void pixelreset()
+        {
+            score += 1;
+            pixelposition = new Vector2(rng.Next(0, graphics.GraphicsDevice.Viewport.Width), rng.Next(0, graphics.GraphicsDevice.Viewport.Height));
+        }
+
     }
 }

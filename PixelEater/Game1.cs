@@ -14,7 +14,8 @@ namespace PixelEater
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Random rng;
-
+        KeyboardState keystate;
+        GamePadState padstate;
 
         //Values
         private Vector2 playersize = new Vector2(40, 40);
@@ -49,7 +50,6 @@ namespace PixelEater
 
             playerposition = new Vector2(graphics.GraphicsDevice.Viewport.Width/2,graphics.GraphicsDevice.Viewport.Height/2);
             pixelposition = new Vector2(rng.Next(0,graphics.GraphicsDevice.Viewport.Width), rng.Next(0, graphics.GraphicsDevice.Viewport.Height));
-
 
             base.Initialize();
         }
@@ -97,7 +97,9 @@ namespace PixelEater
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            //Getting keystate & padstate
+            padstate = GamePad.GetState(PlayerIndex.One);
+            keystate = Keyboard.GetState();
 
             base.Update(gameTime);
         }

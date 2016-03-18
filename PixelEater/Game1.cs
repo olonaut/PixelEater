@@ -114,7 +114,11 @@ namespace PixelEater
             if (keystate.IsKeyDown(Keys.D) || keystate.IsKeyDown(Keys.Right)) playerposition.X += 10;
 
             //Controlls (Gamepad)
-            //TODO
+            //DPAD
+            if (padstate.DPad.Up == ButtonState.Pressed) playerposition.Y -= 10;
+            if (padstate.DPad.Down == ButtonState.Pressed) playerposition.Y += 10;
+            if (padstate.DPad.Left == ButtonState.Pressed) playerposition.X -= 10;
+            if (padstate.DPad.Right == ButtonState.Pressed) playerposition.X += 10;
 
             //Collisions (Walls)
             if (playerposition.X < 0) playerposition.X = 0;

@@ -17,6 +17,9 @@ namespace PixelEater
         KeyboardState keystate;
         GamePadState padstate;
 
+        //Control locks
+        bool dpadlock, wasd_keylock, rtsticklock;
+
         //Values
         private Vector2 playersize = new Vector2(40, 40);
         private Color playercolor = Color.Red;
@@ -55,6 +58,7 @@ namespace PixelEater
 
             playerposition = new Vector2(graphics.GraphicsDevice.Viewport.Width/2,graphics.GraphicsDevice.Viewport.Height/2);
             pixelposition = new Vector2(rng.Next(0,graphics.GraphicsDevice.Viewport.Width - (int)pixelsize.X), rng.Next(0, graphics.GraphicsDevice.Viewport.Height - (int)pixelsize.Y));
+
             score = 0;
 
             base.Initialize();
@@ -110,20 +114,35 @@ namespace PixelEater
 
             //TODO block Controlls of all other devices when one device is pressed.
             //Controlls (Keyboard)
-            if (keystate.IsKeyDown(Keys.W) || keystate.IsKeyDown(Keys.Up)) playerposition.Y -= 10;
-            if (keystate.IsKeyDown(Keys.S) || keystate.IsKeyDown(Keys.Down)) playerposition.Y += 10;
-            if (keystate.IsKeyDown(Keys.A) || keystate.IsKeyDown(Keys.Left)) playerposition.X -= 10;
-            if (keystate.IsKeyDown(Keys.D) || keystate.IsKeyDown(Keys.Right)) playerposition.X += 10;
+            if(dpadlock == false | rtsticklock == false) { 
+                if (keystate.IsKeyDown(Keys.W) || keystate.IsKeyDown(Keys.Up)) playerposition.Y -= 10;
+                if (keystate.IsKeyDown(Keys.S) || keystate.IsKeyDown(Keys.Down)) playerposition.Y += 10;
+                if (keystate.IsKeyDown(Keys.A) || keystate.IsKeyDown(Keys.Left)) playerposition.X -= 10;
+                if (keystate.IsKeyDown(Keys.D) || keystate.IsKeyDown(Keys.Right)) playerposition.X += 10;
+                //lock
+                if (keystate.IsKeyDown(Keys.W) || keystate.IsKeyDown(Keys.Up) || keystate.IsKeyDown(Keys.S) || keystate.IsKeyDown(Keys.Down) || keystate.IsKeyDown(Keys.A) || keystate.IsKeyDown(Keys.Left) || keystate.IsKeyDown(Keys.D) || keystate.IsKeyDown(Keys.Right)) wasd_keylock = true ;
+                else wasd_keylock = false;
+            }
 
             //Controlls (Gamepad)
             //DPAD
-            if (padstate.DPad.Up == ButtonState.Pressed) playerposition.Y -= 10;
-            if (padstate.DPad.Down == ButtonState.Pressed) playerposition.Y += 10;
-            if (padstate.DPad.Left == ButtonState.Pressed) playerposition.X -= 10;
-            if (padstate.DPad.Right == ButtonState.Pressed) playerposition.X += 10;
+            if(wasd_keylock == false | rtsticklock == false) { 
+                if (padstate.DPad.Up == ButtonState.Pressed) playerposition.Y -= 10;
+                if (padstate.DPad.Down == ButtonState.Pressed) playerposition.Y += 10;
+                if (padstate.DPad.Left == ButtonState.Pressed) playerposition.X -= 10;
+                if (padstate.DPad.Right == ButtonState.Pressed) playerposition.X += 10;
+                //lock
+                if (padstate.DPad.Up == ButtonState.Pressed || padstate.DPad.Down == ButtonState.Pressed || padstate.DPad.Left == ButtonState.Pressed || padstate.DPad.Right == ButtonState.Pressed) dpadlock = true;
+                else dpadlock = false;
+            }
             //Right Thumb-Stick
-            playerposition.X += (int)(padstate.ThumbSticks.Right.X * 10);
-            playerposition.Y -= (int)(padstate.ThumbSticks.Right.Y * 10);
+            if(wasd_keylock == false | dpadlock == false) { 
+                playerposition.X += (int)(padstate.ThumbSticks.Right.X * 10);
+                playerposition.Y -= (int)(padstate.ThumbSticks.Right.Y * 10);
+                //lock
+                if ((int)(padstate.ThumbSticks.Right.X * 10) != 0 || (int)(padstate.ThumbSticks.Right.Y * 10) != 0) rtsticklock = true;
+                else rtsticklock = false;
+            }
 
             //Collisions (Walls)
             if (playerposition.X < 0) playerposition.X = 0;

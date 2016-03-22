@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 using System;
 
 namespace PixelEater
@@ -16,6 +17,7 @@ namespace PixelEater
         Random rng;
         KeyboardState keystate;
         GamePadState padstate;
+
 
         //Control locks
         bool dpadlock, wasd_keylock, rtsticklock;
@@ -39,6 +41,9 @@ namespace PixelEater
 
         //Fonts
         SpriteFont font;
+
+        //Sounds
+        SoundEffect eat;
 
         public Game1()
         {
@@ -85,6 +90,8 @@ namespace PixelEater
             pixel.SetData(pixeldata);
 
             font = Content.Load<SpriteFont>("score");
+
+            eat = Content.Load<SoundEffect>("coin");
         }
 
         /// <summary>
@@ -180,6 +187,7 @@ namespace PixelEater
         {
             score += 1;
             pixelposition = new Vector2(rng.Next(0, graphics.GraphicsDevice.Viewport.Width-(int)pixelsize.X), rng.Next(0, graphics.GraphicsDevice.Viewport.Height-(int)pixelsize.Y));
+            eat.Play();
         }
 
     }
